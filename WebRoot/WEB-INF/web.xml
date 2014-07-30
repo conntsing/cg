@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<!-- Spring ApplicationContext配置文件的路径，可使用通配符，多个路径用�,号分隔。此参数用于后面的Spring-Context loader -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+
+	<!--Spring ApplicationContext 载入 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+   	
+	
+	<!--在做上传文件的时候，要在web.xml中增加ActionContextCleanUp这个filter，如果不增加，会发生第一次上传取不到文件的情况  -->
+    <filter>
+        <filter-name>struts-cleanup</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ActionContextCleanUp</filter-class>
+   	</filter>
+  	<filter-mapping>
+  		<filter-name>struts-cleanup</filter-name>
+  		<url-pattern>/*</url-pattern>
+  	</filter-mapping>
+  
+  	<!-- struts2过滤器-->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<jsp-config>
+	    <taglib>
+	        <taglib-uri>oscache</taglib-uri>
+	        <taglib-location>/WEB-INF/lib/oscache-2.4.1.jar</taglib-location>
+	    </taglib>
+    </jsp-config>
+	
+	<!-- session超时定义,单位为分钟。 -->
+	<session-config>
+		<session-timeout>120</session-timeout>
+	</session-config>
+	
+	<!-- 默认首页定义 -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+
+
+</web-app>

@@ -1,0 +1,18 @@
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 代码生成器Action Begin-->
+	<package name="struts-admin-codeGenerator" namespace="/admin/codeGenerator" extends="struts-interceptor">
+		<action name="codeGeneratorAction" class="codeGeneratorAction">
+			<result name="success" type="dispatcher">/jsp/admin/cgList.jsp</result>
+			<result name="add" type="dispatcher">/jsp/admin/cgAdd.jsp</result>
+			<result name="addSave" type="redirectAction">
+				<param name="actionName">codeGeneratorAction</param>
+				<param name="namespace">/admin/codeGenerator</param>
+			</result>
+			
+			<interceptor-ref name="common-params"/>
+		</action>
+		
+	</package>
+	<!-- 代码生成器Action End-->
+</struts>
