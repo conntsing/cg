@@ -9,6 +9,9 @@
 function checkForm(){
 	return true;
 }
+function cancleClick(){
+	self.location='${cg.getObjectName()}Action.${r"${actionExt}"}';    
+}
 </script>
 <style type="text/css">
     body{ font-size:12px;}
@@ -35,7 +38,7 @@ function checkForm(){
     <tr>
     	<td align="center" colspan="3">
     	<input type="submit" value="保存" id="Button1" class="l-button l-button-submit" /> 
-	<input type="button" value="取消" class="l-button l-button-reset" onclick="javascript: history.back(-1);"/>
+	<input type="button" value="取消" class="l-button l-button-reset" onclick="javascript:cancleClick();"/>
     	</td>
     </tr>
 </table>
