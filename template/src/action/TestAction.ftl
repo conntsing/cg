@@ -1,15 +1,13 @@
 package ${cg.getPackagePath()}.controller.action.${cg.getObjectName()};
 
-import org.apache.struts2.StrutsSpringTestCase;
 import static org.hamcrest.CoreMatchers.equalTo;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.xdf.util.DateUtil;
 import cn.xdf.model.${cg.getClassName()};
 import cn.xdf.service.I${cg.getClassName()}Service;
-import com.opensymphony.xwork2.ActionProxy;
+import cn.xdf.controller.action.CommonTestAction;
 
 /**
  * ${cg.getModelName()} Action 测试
@@ -17,17 +15,17 @@ import com.opensymphony.xwork2.ActionProxy;
  * @author cg
  * @since ${cg.getCreateTime()}
  */
-public class Test${cg.getClassName()}Action extends StrutsSpringTestCase {
-	private ActionProxy proxy;
+public class Test${cg.getClassName()}Action extends CommonTestAction {
 	private ${cg.getClassName()}Action test;
-	@Autowired
 	private I${cg.getClassName()}Service ${cg.getObjectName()}Service;
 	
 	@Override
+	public String getNameSpace() {
+		return "/admin/${cg.getObjectName()}/${cg.getObjectName()}Action";
+	}
+	@Override
 	protected void setUp()throws Exception {
 		super.setUp();
-		if (null == proxy)
-			proxy = getActionProxy("/admin/${cg.getObjectName()}/${cg.getObjectName()}Action.do");
 		if (null == test)
 			test = (${cg.getClassName()}Action) proxy.getAction();
 		if(null == ${cg.getObjectName()}Service)
@@ -78,7 +76,7 @@ public class Test${cg.getClassName()}Action extends StrutsSpringTestCase {
 
 	@Test
 	public void testAddSave() {
-		${cg.getClassName()} ${cg.getObjectName()} = addTest${cg.getClassName()}();
+		${cg.getClassName()} ${cg.getObjectName()} = buildTestModel();
 	    test.set${cg.getClassName()}(${cg.getObjectName()});
 		String res = test.addSave();
 		${cg.getObjectName()}Service.deleteByIds(" where id = "+${cg.getObjectName()}.getId());
@@ -90,7 +88,6 @@ public class Test${cg.getClassName()}Action extends StrutsSpringTestCase {
 	@Test
 	public void testEdit() {
 		${cg.getClassName()} ${cg.getObjectName()} = addTest${cg.getClassName()}();
-	    ${cg.getObjectName()}Service.addSave(${cg.getObjectName()});
 		request.setParameter("id", ""+${cg.getObjectName()}.getId());
 		String res = test.edit();
 		Assert.assertEquals("edit", res);
@@ -104,11 +101,11 @@ public class Test${cg.getClassName()}Action extends StrutsSpringTestCase {
 	public void testEditSave(){
 		
 		${cg.getClassName()} ${cg.getObjectName()}1 = addTest${cg.getClassName()}();
-	    ${cg.getObjectName()}Service.addSave(${cg.getObjectName()}1);
 	    ${cg.getClassName()} ${cg.getObjectName()}2 = buildTestModel();
+	    ${cg.getObjectName()}2.setId(${cg.getObjectName()}1.getId());
 		test.set${cg.getClassName()}(${cg.getObjectName()}2);
 		String edit_save_res = test.editSave();
-		${cg.getClassName()} tmp = ${cg.getObjectName()}Service.select${cg.getClassName()}ById(${cg.getObjectName()}1);
+		${cg.getObjectName()}Service.select${cg.getClassName()}ById(${cg.getObjectName()}1);
 		<#if anyStringField??>
 		Assert.assertNotEquals(${cg.getObjectName()}1.get${anyStringField?cap_first}(), tmp.get${anyStringField?cap_first}());
 		Assert.assertEquals("测试2", tmp.get${anyStringField?cap_first}());
