@@ -144,13 +144,13 @@ function itemclick(item){
 	}
 	if(item.value=='edit'){
         var row = manager.getSelectedRow();
-        if (!row) { alert('请选择行'); return; }
+        if (!row) { $.ligerDialog.warn('请选择行'); return; }
             //alert(row.id);
 		window.location="${r"${"}base}/admin/${cg.getObjectName()}/${cg.getObjectName()}Action!edit.${r"${actionExt}"}?id=" + row.id;
 	}
 	if(item.value=='delete'){
 		var row = manager.getSelectedRow();
-        if (!row) { alert('请选择行'); return; }
+        if (!row) {$.ligerDialog.warn('请选择行'); return; }
 		$.ligerDialog.confirm('确认删除模块 ' + row.<#list cg.getFieldList() as field><#if field_index == 1>${field.getName()}</#if></#list> + ' 的信息？', function (yes) {
             if(yes==true){
             	window.location="${r"${"}base}/admin/${cg.getObjectName()}/${cg.getObjectName()}Action!delete.${r"${actionExt}"}?id=" + row.id;
